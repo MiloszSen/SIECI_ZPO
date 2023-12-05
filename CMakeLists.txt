@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(include)
 set(SOURCE_FILES
         src/package.cpp)
-add_executable(SIECI_ZPO ${SOURCE_FILES}  main.cpp)
+add_executable(SIECI_ZPO ${SOURCE_FILES}  main.cpp
+        src/helpers.cpp
+        src/nodes.cpp
+        src/storage_types.cpp)
 
 set(SOURCES_FILES_TESTS
     test/test_package.cpp)
