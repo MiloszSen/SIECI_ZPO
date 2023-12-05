@@ -17,4 +17,14 @@ public:
     virtual std::size_t size() const = 0;
     virtual bool empty() const = 0;
 };
+enum class PackageQueueType{
+    FIFO, LIFO
+};
+class IPackageQueue{
+    virtual Package pop() const = 0;
+    virtual PackageQueueType get_queue_type() const = 0;
+};
+class PackageQueue{
+    PackageQueue(PackageQueueType){};
+};
 #endif //SIECI_ZPO_STORAGE_TYPES_HPP

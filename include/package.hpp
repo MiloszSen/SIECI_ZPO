@@ -2,7 +2,8 @@
 #define SIECI_ZPO_PACKAGE_HPP
 #include <list>
 class Package{
-
+    Package(){};
+    virtual ~Package() = default;
 };
 
 
