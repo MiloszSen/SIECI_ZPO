@@ -6,15 +6,16 @@
 class Package{
 public:
     Package();
-    explicit Package(ElementID id) : id_(id) {assigned_IDs.insert(id_);}
-    Package(Package &&package) noexcept : id_(package.id_){}
-    Package &operator = (Package &&package) noexcept;
-    ElementID get_id() const {return id_;};
+    Package(ElementID id);
+    Package(Package&&);
+    Package &operator = (Package&&);
+    ElementID get_id() const;
     ~Package();
 private:
     ElementID id_;
-    std::set<ElementID> assigned_IDs;
-    std::set<ElementID> freed_IDs;
+    static std::set<ElementID> assigned_IDs;
+    static std::set<ElementID> freed_IDs;
+    const ElementID BLANK_ID = -1;
 };
 
 
