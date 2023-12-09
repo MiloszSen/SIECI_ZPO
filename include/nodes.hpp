@@ -48,7 +48,7 @@ private:
 };
 class Ramp : public PackageSender{
 public:
-    Ramp(ElementID id, TimeOffset di);
+    Ramp(ElementID id, TimeOffset di) ;
     void deliver_goods(Time t);
     TimeOffset get_delivery_interval() const {return di_;};
     ElementID get_id() const {return id_;};
