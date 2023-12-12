@@ -1,8 +1,16 @@
-//
-// Created by agnie on 05.12.2023.
-//
+#ifndef HELPERS_HPP_
+#define HELPERS_HPP_
 
-#ifndef SIECI_ZPO_HELPERS_HPP
-#define SIECI_ZPO_HELPERS_HPP
+#include <functional>
+#include <random>
 
-#endif //SIECI_ZPO_HELPERS_HPP
+#include "types.hpp"
+
+extern std::random_device rd;
+extern std::mt19937 rng;
+
+extern double default_probability_generator();
+
+extern ProbabilityGenerator probability_generator;
+
+#endif /* HELPERS_HPP_ */

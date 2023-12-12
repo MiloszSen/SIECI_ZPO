@@ -5,6 +5,7 @@
 
 class IPackageStockpile{
 public:
+    IPackageStockpile() = default;
     using const_iterator = std::list<Package>::const_iterator;
 
     virtual void push(Package&& package) = 0;
