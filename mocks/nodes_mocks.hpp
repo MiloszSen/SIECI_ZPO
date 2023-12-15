@@ -11,6 +11,7 @@
 
 class MockReceiver : public IPackageReceiver {
 public:
+    void receive_package(Package &&p) const override {}
     MOCK_METHOD1(receive_package, void(Package&&));
 
     MOCK_CONST_METHOD0(begin, IPackageStockpile::const_iterator());

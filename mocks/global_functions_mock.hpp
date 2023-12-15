@@ -7,7 +7,7 @@
 
 #include "helpers.hpp"
 
-// -------
+
 
 class IGlobalFunctionsMock {
 public:
@@ -22,7 +22,7 @@ public:
 };
 
 
-// ----
+
 
 class GlobalFunctionsFixture : public ::testing::Test {
 public:
@@ -40,6 +40,6 @@ protected:
     GlobalFunctionsMock global_functions_mock;
 };
 
-// ----
+
 
 #endif /* MOCKS_GLOBAL_FUNCTIONS_MOCK_HPP_ */

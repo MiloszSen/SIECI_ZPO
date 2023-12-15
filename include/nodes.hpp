@@ -18,6 +18,8 @@ public:
     virtual IPackageStockpile::const_iterator cend() const = 0;
     virtual IPackageStockpile::const_iterator begin() const = 0;
     virtual IPackageStockpile::const_iterator end() const = 0;
+
+
 };
 class ReceiverPreferences{
 public:
@@ -60,10 +62,12 @@ public:
 private:
     ElementID id_;
     TimeOffset di_;
+    Time t_;
+    std::optional<Package> buffer_ = std::nullopt;
 };
 class Storehouse : public IPackageReceiver{
 public:
-    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d ) ;
+    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d = std::make_unique<PackageQueue>(PackageQueueType::FIFO)) ;
     void receive_package(Package &&p) const override {d_ -> push(std::move(p));};
     ElementID get_id() const override {return id_;};
     IPackageStockpile::const_iterator cbegin() const override {return d_->cbegin();};
@@ -92,6 +96,7 @@ private:
     ElementID id_;
     TimeOffset pd_;
     std::unique_ptr<IPackageQueue> q_;
+    std::optional<Package> buffer_ = std::nullopt;
 };
 
 

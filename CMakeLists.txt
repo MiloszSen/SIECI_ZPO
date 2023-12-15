@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 project(SIECI_ZPO)
-
 set(CMAKE_CXX_STANDARD 17)
-include_directories(include)
+include_directories(include mocks)
 set(SOURCE_FILES
         src/package.cpp
         src/helpers.cpp
@@ -12,7 +11,7 @@ add_executable(SIECI_ZPO ${SOURCE_FILES}  main.cpp)
 
 set(SOURCES_FILES_TESTS
         test/main_gtest.cpp
-        #test/test_nodes.cpp
+        test/test_nodes.cpp
         test/test_package.cpp
         test/test_storage_types.cpp)
 set(EXEC_TEST SIECI_ZPO_test)
