@@ -1,11 +1,13 @@
 #include "nodes.hpp"
-Ramp::Ramp(ElementID id, TimeOffset di) : id_(id), di_(di){}
+Ramp::Ramp(ElementID id, TimeOffset di) :  id_(id), di_(di){}
 Worker::Worker(ElementID id, TimeOffset pd, std::unique_ptr<IPackageQueue> q) : id_(id), pd_(pd), q_(std::move(q)) {}
 void PackageSender::push_package(Package &&package) {
     buffer_.emplace(package.get_id());
 }
 
 Storehouse::Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d) : id_(id), d_(std::move(d)) {}
+
+
 
 void ReceiverPreferences::add_receiver(IPackageReceiver *r) {
     double num_of_receivers_begin = double(preferences_.size());
@@ -37,12 +39,16 @@ IPackageReceiver *ReceiverPreferences::choose_receiver() {
     auto prob = pg_();
     if (prob >= 0 && prob <= 1) {
         double distribution = 0.0;
-        for (auto &rec : preferences_) {
+        for (auto &rec: preferences_) {
             distribution = distribution + rec.second;
+            if (distribution < 0 || distribution > 1) {
+                return nullptr;
+            }
             if (prob <= distribution) {
                 return rec.first;
             }
         }
+        return nullptr;
     }
     return nullptr;
 }

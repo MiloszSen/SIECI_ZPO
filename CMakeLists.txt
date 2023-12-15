@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 project(SIECI_ZPO)
 set(CMAKE_CXX_STANDARD 17)
+add_compile_definitions(EXERCISE_ID=2)
 include_directories(include mocks)
 set(SOURCE_FILES
         src/package.cpp
