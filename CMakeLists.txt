@@ -12,7 +12,7 @@ add_executable(SIECI_ZPO ${SOURCE_FILES}  main.cpp)
 
 set(SOURCES_FILES_TESTS
         test/main_gtest.cpp
-        #test/test_nodes.cpp
+        test/test_nodes.cpp
         test/test_package.cpp
         test/test_storage_types.cpp)
 set(EXEC_TEST SIECI_ZPO_test)
@@ -21,7 +21,8 @@ add_executable(${EXEC_TEST} ${SOURCE_FILES} ${SOURCES_FILES_TESTS} test/main_gte
 set(GTEST_ROOT ./googletest-master)
 target_include_directories(${EXEC_TEST} PUBLIC
         ${GTEST_ROOT}/googlemock/include
-        ${GTEST_ROOT}/googletest/include)
+        ${GTEST_ROOT}/googletest/include
+        mocks)
 add_subdirectory(${GTEST_ROOT} googletest-master)
 
 target_link_libraries(${EXEC_TEST} gmock)

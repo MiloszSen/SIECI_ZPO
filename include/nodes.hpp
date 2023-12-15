@@ -12,7 +12,7 @@ enum class ReceiverType{
 };
 class IPackageReceiver{
 public:
-    virtual void receive_package(Package &&p) const = 0;
+    virtual void receive_package(Package &&p) = 0;
     virtual ElementID get_id() const = 0;
     virtual IPackageStockpile::const_iterator cbegin() const = 0;
     virtual IPackageStockpile::const_iterator cend() const = 0;
@@ -60,11 +60,14 @@ public:
 private:
     ElementID id_;
     TimeOffset di_;
+    Time t_;
+    std::optional<Package> buffer_ = std::nullopt;
+
 };
 class Storehouse : public IPackageReceiver{
 public:
-    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d ) ;
-    void receive_package(Package &&p) const override {d_ -> push(std::move(p));};
+    Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d = std::make_unique<PackageQueue>(PackageQueueType::LIFO)) ;
+    void receive_package(Package &&p) override {d_ -> push(std::move(p));};
     ElementID get_id() const override {return id_;};
     IPackageStockpile::const_iterator cbegin() const override {return d_->cbegin();};
     IPackageStockpile::const_iterator cend() const override {return d_->cend();};
@@ -80,7 +83,7 @@ public:
     void do_work(Time t);
     TimeOffset get_processing_duration() const {return pd_;}
     Time get_package_processing_start_time() const {return t_;}
-    void receive_package(Package &&p) const override {q_ -> push(std::move(p));};
+    void receive_package(Package &&p) override {q_ -> push(std::move(p));};
     ElementID get_id() const override { return id_; };
 
     IPackageStockpile::const_iterator cbegin() const override { return q_->cbegin(); }
@@ -92,6 +95,7 @@ private:
     ElementID id_;
     TimeOffset pd_;
     std::unique_ptr<IPackageQueue> q_;
+    std::optional<Package> buffer_ = std::nullopt;
 };
 
 
