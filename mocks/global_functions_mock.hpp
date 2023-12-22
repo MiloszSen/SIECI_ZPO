@@ -7,7 +7,7 @@
 
 #include "helpers.hpp"
 
-
+// -------
 
 class IGlobalFunctionsMock {
 public:
@@ -22,11 +22,11 @@ public:
 };
 
 
-
+// ----
 
 class GlobalFunctionsFixture : public ::testing::Test {
 public:
-    #ifdef WITH_PROBABILITY_GENERATOR
+#ifdef WITH_PROBABILITY_GENERATOR
     GlobalFunctionsFixture() {
         probability_generator = [&]() { return global_functions_mock.generate_canonical(); };
     }
@@ -34,12 +34,12 @@ public:
     ~GlobalFunctionsFixture() override {
         probability_generator = default_probability_generator;
     }
-    #endif
+#endif
 
 protected:
     GlobalFunctionsMock global_functions_mock;
 };
 
-
+// ----
 
 #endif /* MOCKS_GLOBAL_FUNCTIONS_MOCK_HPP_ */
