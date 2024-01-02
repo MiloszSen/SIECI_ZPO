@@ -67,12 +67,10 @@ bool has_reachable_storehouse(const PackageSender* sender, std::map<const Packag
 
 
 bool Factory::is_consistent() const {
-    // Inicjalizacja mapy wszystkich senderów na unvisited
     std::map<const PackageSender*, NodeColor> color;
     for (auto& ramp : ramp_){color[&ramp] = NodeColor::UNVISITED;}
     for (auto& worker : worker_){color[&worker] = NodeColor::UNVISITED;}
 
-    // sprawdzenie za pomocą algorytmu DFS czy z każdej rampy da się dojść do magazynu
     try {
         for (auto &ramp: ramp_) {
             has_reachable_storehouse(&ramp, color);
@@ -86,15 +84,12 @@ bool Factory::is_consistent() const {
 
 
 void save_factory_structure(Factory& factory, std::ostream& os){
-    // saving ramps
     os << std::endl << " == LOADING RAMPS ==" << std::endl;
     auto ramp = [&os] (const Ramp& r){
         os << std::endl<< "LOADING_RAMP id=" << r.get_id();
         os << " delivery-interval=" << r.get_delivery_interval();
     };
     std::for_each(factory.ramp_cbegin(), factory.ramp_cend(),ramp);
-
-    // saving Worker
     os << std::endl << std::endl << " == WORKER ==" << std::endl;
     auto worker = [&os] (const Worker& w){
         os << std::endl<< "WORKER id=" << w.get_id();
@@ -105,25 +100,18 @@ void save_factory_structure(Factory& factory, std::ostream& os){
         os << " queue-type=" << s;
     };
     std::for_each(factory.worker_cbegin(), factory.worker_cend(),worker);
-
-    // saving storehouse
     os << std::endl << std::endl << " == STOREHOUSE ==" << std::endl;
     auto storehouse = [&os] (const Storehouse& s){
         os << std::endl << "STOREHOUSE id=" << s.get_id();
     };
     std::for_each(factory.storehouse_cbegin(), factory.storehouse_cend(), storehouse);
-
-
-
-    // saving links
     os <<std::endl << std::endl << " == LINKS ==" << std::endl;
-    // links from ramp to worker
     auto ramp_to = [&os] (const Ramp& r){
         for (auto& receiver: r.receiver_preferences_.get_preferences())
             os << std::endl << "LINK src=ramp-" << r.get_id() << " dest=worker-" << receiver.first->get_id();
     };
     std::for_each(factory.ramp_cbegin(), factory.ramp_cend(), ramp_to);
-    // links from worker
+
     auto worker_to = [&os](const Worker& w){
         for (auto& receiver: w.receiver_preferences_.get_preferences()){
             if (receiver.first->get_receiver_type() == ReceiverType::WORKER){

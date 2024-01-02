@@ -60,13 +60,6 @@ void generate_structure_report(const Factory& f, std::ostream& os){
     }
 }
 
-
-
-
-
-
-
-//funkcja pomocnicza do generate_simulation_turn_report
 void print_queue (std::ostream& os, IPackageStockpile* q){
     bool is_first = true;
     for_each(q->cbegin(), q->cend(),
