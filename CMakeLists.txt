@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 project(SIECI_ZPO)
-add_compile_definitions(EXERCISE_ID=3)
+add_compile_definitions(EXERCISE_ID=5)
 set(CMAKE_CXX_STANDARD 17)
 include_directories(include)
 set(SOURCE_FILES
@@ -8,13 +8,18 @@ set(SOURCE_FILES
         src/helpers.cpp
         src/nodes.cpp
         src/storage_types.cpp
-        src/factory.cpp)
+        src/factory.cpp
+        src/reports.cpp
+        src/simulation.cpp
+)
 add_executable(SIECI_ZPO ${SOURCE_FILES}  main.cpp)
 
 set(SOURCES_FILES_TESTS
         test/main_gtest.cpp
         test/test_nodes.cpp
         test/test_package.cpp
+        test/test_reports.cpp
+        test/test_simulate.cpp
         test/test_storage_types.cpp
         test/test_Factory.cpp
         test/test_factory_io.cpp)

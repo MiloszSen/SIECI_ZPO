@@ -45,7 +45,7 @@ public:
     PackageSender() = default;
     PackageSender(PackageSender &&package_sender) = default;
     void send_package();
-    const std::optional<Package>& get_sending_buffer() {return buffer_;};
+    const std::optional<Package>& get_sending_buffer() const {return buffer_;};
 protected:
     void push_package(Package &&package);
 private:
@@ -71,6 +71,7 @@ public:
     void receive_package(Package &&p) override {d_ -> push(std::move(p));};
     ElementID get_id() const override {return id_;};
     ReceiverType get_receiver_type() const override {return ReceiverType::STOREHOUSE;}
+    IPackageStockpile* get_queue() const {return &*d_;}
     IPackageStockpile::const_iterator cbegin() const override {return d_->cbegin();};
     IPackageStockpile::const_iterator cend() const override {return d_->cend();};
     IPackageStockpile::const_iterator begin() const override {return d_->begin();};
@@ -89,6 +90,7 @@ public:
     ElementID get_id() const override { return id_; };
     ReceiverType get_receiver_type() const override {return ReceiverType::WORKER;}
     IPackageQueue* get_queue() const {return &*q_;}
+    const std::optional<Package>& get_processing_buffer() const {return buffer_;}
     IPackageStockpile::const_iterator cbegin() const override { return q_->cbegin(); }
     IPackageStockpile::const_iterator cend() const override { return q_->cend(); }
     IPackageStockpile::const_iterator begin() const override { return q_->begin(); }
